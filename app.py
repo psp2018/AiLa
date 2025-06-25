@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 from dotenv import load_dotenv
-from langchain.callbacks import get_openai_callback
+from langchain_community.callbacks.manager import get_openai_callback
 from chains.qa_chain_refine import build_qa_chain
 from utils.helpers import extract_answer, extract_sources
 import json
@@ -14,7 +14,7 @@ st.title("📜 GDPR & FADP Assistant")
 qa_chain = build_qa_chain()
 
 # --- Tabs for interaction and exploration ---
-tab1, tab2, tab3 = st.tabs(["🤖 Ask GDPR questions", "📖 Browse GDPR Articles", "📖 Aila under the hood"])
+tab1, tab2, tab3 = st.tabs(["🤖 Ask GDPR questions", "📖 Browse GDPR Articles", "📖 Under the hood"])
 
 with tab1:
     st.subheader("Ask a question about GDPR or FADP")

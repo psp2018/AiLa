@@ -3,7 +3,7 @@ from langchain.llms import OpenAI
 from langchain.chains import RefineDocumentsChain, LLMChain
 from langchain.prompts import PromptTemplate
 from langchain.vectorstores import FAISS
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from utils.loader import load_and_split_documents
 from utils.formatting import format_answer
 from utils.helpers import extract_article_number
@@ -26,7 +26,9 @@ def build_qa_chain():
     index_path = "faiss_index_combined"
     if os.path.exists(index_path):
         vectorstore = FAISS.load_local(
-            index_path, OpenAIEmbeddings(), allow_dangerous_deserialization=True
+            index_path,
+            OpenAIEmbeddings(model="text-embedding-3-small"),
+            allow_dangerous_deserialization=True,
         )
     else:
         docs_gdpr = load_and_split_documents(

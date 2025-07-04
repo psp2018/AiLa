@@ -29,7 +29,6 @@ st.title(
 )
 
 qa_chain = build_qa_chain()
-
 # --- Tabs for interaction and exploration ---
 tab1, tab2, tab3, tab5 = st.tabs(
     [

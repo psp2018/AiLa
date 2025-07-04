@@ -29,12 +29,11 @@ st.title("📜 GDPR & FADP Assistant")
 qa_chain = build_qa_chain()
 
 # --- Tabs for interaction and exploration ---
-tab1, tab2, tab3, tab4, tab5 = st.tabs(
+tab1, tab2, tab3, tab5 = st.tabs(
     [
         "Ask data protection questions",
         "Browse articles",
         "Understand how it works",
-        "Dev",
         "Legal Glossary",
     ]
 )

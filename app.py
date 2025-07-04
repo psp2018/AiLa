@@ -24,9 +24,7 @@ GA_SCRIPT = f"""
 """
 
 st.markdown(GA_SCRIPT, unsafe_allow_html=True)
-st.title(
-    "📜 GDPR & FADP Assistant OR or head to -lets get you started- tab for some common questions"
-)
+st.title("📜 GDPR & FADP Assistant")
 
 qa_chain = build_qa_chain()
 # --- Tabs for interaction and exploration ---

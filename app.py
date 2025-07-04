@@ -24,7 +24,9 @@ GA_SCRIPT = f"""
 """
 
 st.markdown(GA_SCRIPT, unsafe_allow_html=True)
-st.title("📜 GDPR & FADP Assistant")
+st.title(
+    "📜 GDPR & FADP Assistant OR or head to -lets get you started- tab for some common questions"
+)
 
 qa_chain = build_qa_chain()
 
@@ -41,9 +43,7 @@ tab1, tab2, tab3, tab5 = st.tabs(
 
 with tab1:
     # st.subheader("Ask a question about GDPR or FADP")
-    st.markdown(
-        "### 🤖 Ask a Question about GDPR or FADP or head to -lets get you started- tab for some common questions"
-    )
+    st.markdown("### 🤖 Ask a Question about GDPR or FADP")
     # st.markdown("---")
 
     query = st.text_input(

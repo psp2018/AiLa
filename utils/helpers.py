@@ -2,8 +2,14 @@ import re
 import textwrap
 import json
 
+
 def extract_article_number(text: str) -> str:
-    match = re.search(r'article\s+(\d{1,3})\b', text, re.IGNORECASE)
+    match = re.search(r"article\s+(\d{1,3})\b", text, re.IGNORECASE)
+    print(
+        f"📄 HELPERS: Retrieved article number: {match.group(1)}"
+        if match
+        else "📄 No article number found."
+    )
     return f"Article {match.group(1)}" if match else None
 
 
@@ -23,6 +29,7 @@ def extract_answer(response: dict, width: int = 90) -> str:
         return "⚠️ Unexpected response format."
     return format_answer(answer_text)
 
+
 def format_answer_old(answer, width: int = 90) -> str:
     if not isinstance(answer, str):
         return "⚠️ Unable to format answer (not a string)"
@@ -34,9 +41,6 @@ def format_answer_old(answer, width: int = 90) -> str:
     wrapped = textwrap.fill(answer, width=width)
     return wrapped
 
-import re
-
-import re
 
 def format_answer(answer) -> str:
     """
@@ -57,11 +61,14 @@ def format_answer(answer) -> str:
     paragraphs = [p.strip() for p in answer.split("\n") if p.strip()]
     formatted = []
 
-    bullet_pattern = re.compile(r"""^(
+    bullet_pattern = re.compile(
+        r"""^(
         [\-\*\•]         |   # dash, asterisk or bullet
         \d+[\.\)]        |   # numbered list (1. or 2)
         [a-zA-Z][\.\)]       # a) or A.
-    )\s""", re.VERBOSE)
+    )\s""",
+        re.VERBOSE,
+    )
 
     for para in paragraphs:
         if bullet_pattern.match(para):
@@ -73,7 +80,7 @@ def format_answer(answer) -> str:
 
 
 def extract_article_title(text):
-    match = re.search(r'(Article\s+\d+)', text)
+    match = re.search(r"(Article\s+\d+)", text)
     return match.group(1) if match else None
 
 
@@ -104,6 +111,7 @@ def extract_sources(response: dict, max_preview_chars: int = 300) -> list:
 
     return formatted
 
+
 def format_sources(sources):
     formatted = []
     for i, doc in enumerate(sources):
@@ -112,10 +120,12 @@ def format_sources(sources):
         formatted.append((title, content[:300]))
     return formatted
 
+
 def display_token_usage(callback_data, show=True):
     if show:
         return f"Tokens used: {callback_data.total_tokens} (Prompt: {callback_data.prompt_tokens}, Completion: {callback_data.completion_tokens}) | Cost: ${callback_data.total_cost:.4f}"
     return ""
+
 
 def load_articles(path):
     with open(path, "r", encoding="utf-8") as f:

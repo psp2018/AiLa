@@ -139,41 +139,41 @@ with tab3:
   """
         )
 
-with tab4:
-    # st.subheader("🛠 AILA Dev Panel")
+# with tab4:
+#     # st.subheader("🛠 AILA Dev Panel")
 
-    st.markdown("### ✅ Weekly Plan – Phase 2")
-    st.markdown(
-        """
-    - [x] Beautify sources section
-    - [ ] Enhance UI layout (padding, font size, spinner)
-    - [ ] Add legal glossary section
-    - [ ] Track usage with analytics
-    - [ ] Add multi-turn chat
-    """
-    )
+#     st.markdown("### ✅ Weekly Plan – Phase 2")
+#     st.markdown(
+#         """
+#     - [x] Beautify sources section
+#     - [ ] Enhance UI layout (padding, font size, spinner)
+#     - [ ] Add legal glossary section
+#     - [ ] Track usage with analytics
+#     - [ ] Add multi-turn chat
+#     """
+#     )
 
-    st.markdown("### 🔍 Deployment Info")
-    import subprocess
+#     st.markdown("### 🔍 Deployment Info")
+#     import subprocess
 
-    try:
-        commit_hash = (
-            subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
-            .decode()
-            .strip()
-        )
-        branch_name = (
-            subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"])
-            .decode()
-            .strip()
-        )
-    except Exception:
-        commit_hash = "Unavailable"
-        branch_name = "Unavailable"
+#     try:
+#         commit_hash = (
+#             subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
+#             .decode()
+#             .strip()
+#         )
+#         branch_name = (
+#             subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"])
+#             .decode()
+#             .strip()
+#         )
+#     except Exception:
+#         commit_hash = "Unavailable"
+#         branch_name = "Unavailable"
 
-    st.markdown(f"- **Branch:** `{branch_name}`")
-    st.markdown(f"- **Commit:** `{commit_hash}`")
-    st.markdown(f"- **Mode:** `Development`")
+#     st.markdown(f"- **Branch:** `{branch_name}`")
+#     st.markdown(f"- **Commit:** `{commit_hash}`")
+#     st.markdown(f"- **Mode:** `Development`")
 
 with tab5:
     st.subheader("📘 Legal Glossary – Key Terms in GDPR & FADP")

@@ -41,7 +41,9 @@ tab1, tab2, tab3, tab5 = st.tabs(
 
 with tab1:
     # st.subheader("Ask a question about GDPR or FADP")
-    st.markdown("### 🤖 Ask a Question about GDPR or FADP")
+    st.markdown(
+        "### 🤖 Ask a Question about GDPR or FADP or head to -lets get you started- tab for some common questions"
+    )
     # st.markdown("---")
 
     query = st.text_input(

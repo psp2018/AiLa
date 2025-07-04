@@ -9,6 +9,21 @@ import json
 load_dotenv()
 
 st.set_page_config(page_title="GDPR & FADP Assistant", layout="wide")
+
+GA_MEASUREMENT_ID = "G-NVP6YKYWW5"  # Replace this with your actual ID
+
+GA_SCRIPT = f"""
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_MEASUREMENT_ID}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{ dataLayer.push(arguments); }}
+  gtag('js', new Date());
+  gtag('config', '{GA_MEASUREMENT_ID}');
+</script>
+"""
+
+st.markdown(GA_SCRIPT, unsafe_allow_html=True)
 st.title("📜 GDPR & FADP Assistant")
 
 qa_chain = build_qa_chain()
@@ -94,7 +109,7 @@ with tab3:
 
     with col1:
         st.image(
-            "app_assets/images/AILA_Architecture.png",
+            "app_assets/images/Aila_Architecture.png",
             caption="AILA System Architecture",
             use_container_width=True,
         )

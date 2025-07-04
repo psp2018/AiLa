@@ -3,7 +3,7 @@ from langchain.llms import OpenAI
 from langchain.chains import RefineDocumentsChain, LLMChain
 from langchain.prompts import PromptTemplate
 from langchain.vectorstores import FAISS
-from langchain_openai import OpenAIEmbeddings
+from langchain.embeddings import OpenAIEmbeddings
 from utils.loader import load_and_split_documents
 from utils.formatting import format_answer
 from utils.helpers import extract_article_number
@@ -26,9 +26,7 @@ def build_qa_chain():
     index_path = "faiss_index_combined"
     if os.path.exists(index_path):
         vectorstore = FAISS.load_local(
-            index_path,
-            OpenAIEmbeddings(model="text-embedding-3-small"),
-            allow_dangerous_deserialization=True,
+            index_path, OpenAIEmbeddings(), allow_dangerous_deserialization=True
         )
     else:
         docs_gdpr = load_and_split_documents(
@@ -40,7 +38,7 @@ def build_qa_chain():
         docs = docs_gdpr + docs_fadp
         vectorstore = build_vectorstore(docs, persist_path=index_path)
 
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 15})
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
 
     initial_prompt = PromptTemplate(
         input_variables=["context", "question"],
@@ -102,7 +100,6 @@ Refined answer:""",
             "data minimisation",
             "data minimization",
             "jurisdictions",
-            "institutional beneficiaries",
         ]
         query_lower = query.lower()
         return any(kw in query_lower for kw in keywords)
@@ -119,9 +116,7 @@ Refined answer:""",
             return {"result": "No relevant documents found.", "source_documents": []}
 
         target_article = extract_article_number(query)
-        print("QA_CHAIN_REFINE: target article", target_article)
         regulation = detect_regulation(query, override=regulation_override)
-        print("QA_CHAIN_REFINE: regulation", regulation)
 
         filtered_docs = all_documents
         if regulation:
@@ -133,36 +128,29 @@ Refined answer:""",
 
         documents = filtered_docs or all_documents
 
-        # Show articles retrieved for debug
-        print("QA_CHAIN_REFINE: Retrieved articles:")
-        for doc in documents:
-            print(f"- {doc.metadata.get('article')} [{doc.metadata.get('source')}]")
-
-        # Normalize target_article
-        target_article_norm = target_article.strip().lower() if target_article else ""
-
+        # 🔎 Try exact match first
         if target_article:
             exact_match = [
                 doc
                 for doc in documents
                 if doc.metadata.get("article", "").strip().lower()
-                == f"article {target_article_norm}".strip()
+                == target_article.strip().lower()
             ]
-
             if exact_match:
                 documents = exact_match
             else:
-                partial_match = [
+                # 🔍 Try fallback match in content
+                fallback_match = [
                     doc
                     for doc in documents
-                    if target_article_norm in doc.page_content.lower()
-                    or target_article_norm in doc.metadata.get("article", "").lower()
+                    if target_article.lower() in doc.page_content.lower()
                 ]
-                if partial_match:
-                    documents = partial_match
+                if fallback_match:
+                    documents = fallback_match
                 else:
+                    # ❌ Nothing found
                     print(f"📛 No documents found matching '{target_article}'")
-                    print("📄 QA_CHAIN_REFINE: Available articles in retrieved docs:")
+                    print("📄 Available articles in retrieved docs:")
                     for doc in documents:
                         print(
                             f"- {doc.metadata.get('article')} [{doc.metadata.get('source')}]"

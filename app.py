@@ -33,8 +33,9 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(
     [
         "Ask data protection questions",
         "Browse articles",
-        "Understand how it works",
-        "Lets get you started" "Legal Glossary",
+        "Lets get you started",
+        # "Legal Glossary",
+        "Under the hood",
     ]
 )
 
@@ -102,43 +103,8 @@ with tab2:
                     f"Explain {entry.get('article')} of {selected_regulation}"
                 )
                 st.experimental_rerun()
+
 with tab3:
-    # st.subheader("🛠️ AILA Under the Hood")
-    col1, col2 = st.columns([1, 2])
-
-    with col1:
-        st.image(
-            "app_assets/images/Aila_architecture.png",
-            caption="AILA System Architecture",
-            use_container_width=True,
-        )
-
-    with col2:
-        st.markdown(
-            """
-  AILA (AI Legal Assistant) is powered by a **Retrieval-Augmented Generation (RAG)** pipeline that ensures answers are precise, grounded in legal text, and fully explainable.
-
-  ### 🧩 Key Components:
-  - **User Query**: The user submits a GDPR/FADP question.
-  - **Document Retrieval**: Relevant articles are fetched using a vector-based retriever (FAISS).
-  - **LLM + Refine Chain**: An OpenAI model answers using *only* the retrieved documents.
-  - **Formatting + Citations**: The output is formatted with bullet points and source previews.
-  - **Indexing**: Articles are preprocessed into metadata-rich chunks stored in a combined index.
-
-  ---
-
-  ### 🔍 What is RAG?
-
-  **RAG (Retrieval-Augmented Generation)** is a technique that blends:
-
-  - **Search**: to retrieve the most relevant context (e.g., legal articles),
-  - **Generation**: to create an answer based solely on that context.
-
-  This design reduces hallucinations and ensures answers stay aligned with official GDPR/FADP content.
-  """
-        )
-
-with tab4:
     # st.subheader("🛠 AILA Dev Panel")
 
     st.markdown(
@@ -179,29 +145,63 @@ with tab4:
     """
     )
 
+# with tab4:
+#     st.subheader("📘 Legal Glossary – Key Terms in GDPR & FADP")
+
+#     glossary_terms = {
+#         "Personal Data": "Any information relating to an identified or identifiable natural person.",
+#         "Data Subject": "The individual to whom personal data relates.",
+#         "Controller": "The entity that determines the purposes and means of processing personal data.",
+#         "Processor": "The entity that processes data on behalf of the controller.",
+#         "Processing": "Any operation performed on personal data, whether automated or not.",
+#         "Consent": "Freely given, specific, informed, and unambiguous indication of the data subject's wishes.",
+#         "Data Protection Officer (DPO)": "An expert appointed to ensure compliance with data protection laws.",
+#         "Pseudonymisation": "Processing of data in such a way that it can no longer be attributed to a specific individual without additional information.",
+#         "Profiling": "Automated processing to evaluate personal aspects of an individual.",
+#         "Right to Access": "Data subject’s right to obtain confirmation and access to their personal data.",
+#         "Right to Erasure (Right to be Forgotten)": "Allows individuals to request deletion of their personal data.",
+#         "FDPIC": "Federal Data Protection and Information Commissioner (Switzerland).",
+#     }
+
+#     for term, definition in glossary_terms.items():
+#         with st.expander(term):
+#             st.write(definition)
+
 with tab5:
-    st.subheader("📘 Legal Glossary – Key Terms in GDPR & FADP")
+    # st.subheader("🛠️ AILA Under the Hood")
+    col1, col2 = st.columns([1, 2])
 
-    glossary_terms = {
-        "Personal Data": "Any information relating to an identified or identifiable natural person.",
-        "Data Subject": "The individual to whom personal data relates.",
-        "Controller": "The entity that determines the purposes and means of processing personal data.",
-        "Processor": "The entity that processes data on behalf of the controller.",
-        "Processing": "Any operation performed on personal data, whether automated or not.",
-        "Consent": "Freely given, specific, informed, and unambiguous indication of the data subject's wishes.",
-        "Data Protection Officer (DPO)": "An expert appointed to ensure compliance with data protection laws.",
-        "Pseudonymisation": "Processing of data in such a way that it can no longer be attributed to a specific individual without additional information.",
-        "Profiling": "Automated processing to evaluate personal aspects of an individual.",
-        "Right to Access": "Data subject’s right to obtain confirmation and access to their personal data.",
-        "Right to Erasure (Right to be Forgotten)": "Allows individuals to request deletion of their personal data.",
-        "FDPIC": "Federal Data Protection and Information Commissioner (Switzerland).",
-    }
+    with col1:
+        st.image(
+            "app_assets/images/Aila_architecture.png",
+            caption="AILA System Architecture",
+            use_container_width=True,
+        )
 
-    for term, definition in glossary_terms.items():
-        with st.expander(term):
-            st.write(definition)
+    with col2:
+        st.markdown(
+            """
+  AILA (AI Legal Assistant) is powered by a **Retrieval-Augmented Generation (RAG)** pipeline that ensures answers are precise, grounded in legal text, and fully explainable.
 
+  ### 🧩 Key Components:
+  - **User Query**: The user submits a GDPR/FADP question.
+  - **Document Retrieval**: Relevant articles are fetched using a vector-based retriever (FAISS).
+  - **LLM + Refine Chain**: An OpenAI model answers using *only* the retrieved documents.
+  - **Formatting + Citations**: The output is formatted with bullet points and source previews.
+  - **Indexing**: Articles are preprocessed into metadata-rich chunks stored in a combined index.
 
+  ---
+
+  ### 🔍 What is RAG?
+
+  **RAG (Retrieval-Augmented Generation)** is a technique that blends:
+
+  - **Search**: to retrieve the most relevant context (e.g., legal articles),
+  - **Generation**: to create an answer based solely on that context.
+
+  This design reduces hallucinations and ensures answers stay aligned with official GDPR/FADP content.
+  """
+        )
 # --- Simulated Bottom Bar ---
 st.markdown("---")
 col1, col2 = st.columns([1, 2])

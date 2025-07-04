@@ -109,7 +109,7 @@ with tab3:
 
     with col1:
         st.image(
-            "app_assets/images/Aila_Architecture.png",
+            "app_assets/images/Aila_architecture.png",
             caption="AILA System Architecture",
             use_container_width=True,
         )
